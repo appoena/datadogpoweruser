@@ -1,0 +1,8 @@
+curl -X POST http://localhost:8081/api/todoitems -H 'Content-Type:application/json' -d '{"name":"Tarefa para deletar","isComplete":false}'
+curl -X POST http://localhost:8081/api/todoitems -H 'Content-Type:application/json' -d '{"name":"Instrumentar aplicação","isComplete":false}'
+curl -X POST http://localhost:8081/api/todoitems -H 'Content-Type:application/json' -d '{"name":"Configurar Unified Service Tagging","isComplete":false}'
+curl -X POST http://localhost:8081/api/todoitems -H 'Content-Type:application/json' -d '{"name":"Habilitar Runtime Metrics","isComplete":false}'
+curl -X GET http://localhost:8081/api/todoitems -H 'Content-Type:application/json'
+curl -X PUT http://localhost:8081/api/todoitems -H 'Content-Type:application/json' -d '{"name":"Instrumentar aplicação","isComplete":true}'
+curl -X DELETE http://localhost:8081/api/todoitems/1 -H 'Content-Type:application/json'
+curl -X GET http://localhost:8081/api/todoitems -H 'Content-Type:application/json'
