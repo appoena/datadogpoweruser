@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask
+spec:
+  selector:
+    matchLabels:
+      app: python-flask
+  template:
+    metadata:
+      labels:
+        app: python-flask
+    spec:
+      containers:
+      - name: python-flask
+        image: python-flask
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+        env: []
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-flask
+spec:
+  type: LoadBalancer
+  selector:
+    app: python-flask
+  ports:
+  - name: http
+    port: 8082
+    targetPort: 5000
