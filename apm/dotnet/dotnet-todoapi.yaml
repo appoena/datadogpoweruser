@@ -14,16 +14,10 @@ spec:
       containers:
       - name: dotnet-todoapi
         image: dotnet-todoapi
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
-        env:
-          - name: DD_AGENT_HOST
-            valueFrom:
-              fieldRef:
-                fieldPath: status.hostIP
-          - name: DD_SERVICE
-            value: "dotnet-todoapi"
+        env: []
         resources:
           requests:
             cpu: 200m
