@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TodoApi.Models;
+using Microsoft.Extensions.Logging;
 
 namespace TodoApi.Controllers
 {
@@ -15,10 +16,12 @@ namespace TodoApi.Controllers
     public class TodoItemsController : ControllerBase
     {
         private readonly TodoContext _context;
+        readonly ILogger<TodoItemsController> _logger;
 
-        public TodoItemsController(TodoContext context)
+        public TodoItemsController(TodoContext context, ILogger<TodoItemsController> logger)
         {
             _context = context;
+             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         #endregion
 
@@ -26,6 +29,7 @@ namespace TodoApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TodoItem>>> GetTodoItems()
         {
+            _logger.LogInformation("Get Items");
             return await _context.TodoItems.ToListAsync();
         }
 
@@ -64,6 +68,7 @@ namespace TodoApi.Controllers
             {
                 if (!TodoItemExists(id))
                 {
+                    _logger.LogInformation("Item Not Found");
                     return NotFound();
                 }
                 else
@@ -98,6 +103,7 @@ namespace TodoApi.Controllers
             var todoItem = await _context.TodoItems.FindAsync(id);
             if (todoItem == null)
             {
+                _logger.LogInformation("Item Not Found");
                 return NotFound();
             }
 
