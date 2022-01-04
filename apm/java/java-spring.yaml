@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-spring
+spec:
+  selector:
+    matchLabels:
+      app: java-spring
+  template:
+    metadata:
+      labels:
+        app: java-spring
+    spec:
+      containers:
+      - name: java-spring
+        image: java-spring
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+        env: []
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 300Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: java-spring
+spec:
+  type: LoadBalancer
+  selector:
+    app: java-spring
+  ports:
+  - name: http
+    port: 8083
+    targetPort: 8080
