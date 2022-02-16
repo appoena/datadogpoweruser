@@ -1,0 +1,8 @@
+package_update: true
+packages:
+  - redis-server
+
+runcmd:
+  - sudo sed -i "s/supervised no/supervised systemd/" /etc/redis/redis.conf
+  - sudo sed -i "s/# requirepass foobared/requirepass datadog/" /etc/redis/redis.conf
+  - sudo systemctl restart redis.service
