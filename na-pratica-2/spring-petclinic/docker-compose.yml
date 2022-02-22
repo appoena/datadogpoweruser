@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:14.1
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=petclinic
+      - POSTGRES_USER=petclinic
+      - POSTGRES_DB=petclinic
+  petclinic:
+    depends_on:
+      - postgres
+      - mysql
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=postgres
+  datadog-agent:
+    image: "gcr.io/datadoghq/agent:7.33.1"
+    environment:
+      - DD_API_KEY=SUA-APIKEY-AQUI
+      - DD_ENV=SEU-ENV-AQUI
+    ports:
+      - "8126:8126"
+      - "8125:8125"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+      - /var/run/datadog:/var/run/datadog
