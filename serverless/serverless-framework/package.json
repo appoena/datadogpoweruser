@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "serverless-plugin-datadog": "^5.0.0",
+    "serverless-python-requirements": "^5.4.0",
+    "serverless-wsgi": "^3.0.0"
+  }
+}
