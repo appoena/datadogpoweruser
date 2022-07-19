@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-todoapi
+spec:
+  selector:
+    matchLabels:
+      app: dotnet-todoapi
+  template:
+    metadata:
+      labels:
+        app: dotnet-todoapi
+    spec:
+      containers:
+      - name: dotnet-todoapi
+        image: dotnet-todoapi
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env: []
+        resources:
+          requests:
+            cpu: 200m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-todoapi
+spec:
+  type: LoadBalancer
+  selector:
+    app: dotnet-todoapi
+  ports:
+  - name: http
+    port: 8081
+    targetPort: 80
