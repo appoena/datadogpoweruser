@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . .
 RUN mvn clean package
 
-FROM openjdk:11-jre-slim
+FROM eclipse-temurin:11-jre-alpine
 WORKDIR /app
 COPY --from=build /app/target/spring-java-0.0.1-SNAPSHOT.jar spring-java.jar
 
