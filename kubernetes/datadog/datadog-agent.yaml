@@ -1,0 +1,69 @@
+kind: "DatadogAgent"
+apiVersion: "datadoghq.com/v2alpha1"
+
+metadata:
+  name: "datadog"
+  namespace: "datadog"
+
+  annotations:
+    agent.datadoghq.com/private-action-runner-enabled: "true"
+    agent.datadoghq.com/private-action-runner-split-enabled: "true"
+    agent.datadoghq.com/private-action-runner-configdata: |
+      private_action_runner:
+        enabled: true
+        self_enroll: true
+        api_key_only_enrollment: true
+        actions_allowlist:
+          - com.datadoghq.script.runPredefinedScript
+
+    cluster-agent.datadoghq.com/private-action-runner-enabled: "true"
+    cluster-agent.datadoghq.com/private-action-runner-configdata: |
+      private_action_runner:
+        enabled: true
+        self_enroll: true
+        api_key_only_enrollment: true
+        actions_allowlist:
+          - com.datadoghq.script.runPredefinedScript
+
+spec:
+  global:
+    clusterName: "appoena"
+    site: "datadoghq.com"
+
+    credentials:
+      apiSecret:
+        secretName: "datadog-secret"
+        keyName: "api-key"
+
+    registry: "registry.datadoghq.com"
+
+    tags:
+      - "env:dev"
+
+    kubelet:
+      tlsVerify: false
+
+  features:
+    clusterChecks:
+      enabled: true
+
+    orchestratorExplorer:
+      enabled: true
+
+    apm:
+      instrumentation:
+        enabled: true
+
+        targets:
+          - name: "default-target"
+            ddTraceVersions:
+              java: "1"
+              python: "4"
+              js: "6"
+              php: "1"
+              dotnet: "3"
+              ruby: "2"
+
+    logCollection:
+      enabled: true
+      containerCollectAll: true
